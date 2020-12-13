@@ -8,8 +8,9 @@ export default function List({ selectedNote, setSelectedNote, notes }) {
 
   return (
     <ListGroup as="ul">
-      {notes.map((note, index) => (
+      {notes.map((note) => (
         <ListGroup.Item
+          //highlight the note
           active={selectedNote ? note.id === selectedNote.id : false}
           onClick={() => onSelectNote(note)}
           as="li"

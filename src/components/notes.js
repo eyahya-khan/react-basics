@@ -6,10 +6,10 @@ D: Delete a note
 */
 
 const notes = [
-  { id: 1, title: "New note", body: "" },
-  { id: 2, title: "Another note", body: "Empty" },
-  { id: 4, title: "Another note", body: "Something else" },
-  { id: 3, title: "Yet another note!", body: "" },
+  { id: 1, title: "New note", body: "This is new note" },
+  //   { id: 2, title: "Empty note? No", body: "Empty note forever" },
+  //   { id: 4, title: "Else note", body: "Something else note" },
+  //   { id: 3, title: "Yet another note!", body: " This is yet another note" },
 ];
 
 // works!
@@ -41,7 +41,8 @@ export function updateNote(id, title, body) {
     body,
   };
   // remove old note
-  notes.splice(indexToUpdate, 1, note);
+  //   notes.splice(indexToUpdate, 1, note);
+  notes.splice(indexToUpdate, 1);
   // add new note
   notes.splice(0, 0, note);
   return notes;
