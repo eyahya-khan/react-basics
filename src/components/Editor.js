@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Button";
@@ -13,10 +13,10 @@ export default function Editor({ selectedNote, refreshList }) {
   const [isStatus, setIsStatus] = useState("");
   const [isButton, setIsButton] = useState("Add");
 
-  const inputRef = useRef(null);
-  useEffect(() => {
-    inputRef.current.focus();
-  });
+  // const inputRef = useRef('');
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // });
 
   //for every change of input text
   useEffect(() => {
@@ -56,6 +56,7 @@ export default function Editor({ selectedNote, refreshList }) {
     // update input text
     if (selectedNote) {
       setIsStatus("Updated");
+      setIsButton("Add");
       updateNote(selectedNote.id, title, body);
       return refreshList();
     }
@@ -70,14 +71,18 @@ export default function Editor({ selectedNote, refreshList }) {
   // delete note
   const onDelete = (e) => {
     e.preventDefault();
+
     // show delete message
     const { id } = selectedNote;
+    // console.log(id);
+    // console.log(selectedNote);
 
     deleteNote(id);
     refreshList();
     setTitle("");
     setBody("");
     setIsStatus("Deleted");
+    setIsButton("Add");
   };
 
   return (
@@ -91,7 +96,7 @@ export default function Editor({ selectedNote, refreshList }) {
           value={title}
           // "onChange" for edit input text
           onChange={onChangeTitle}
-          ref={inputRef}
+          // ref={inputRef}
         />
         <Form.Label>Note</Form.Label>
         <Form.Control
