@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Button";
@@ -10,34 +10,28 @@ export default function Editor({ selectedNote, refreshList }) {
   const [body, setBody] = useState("");
 
   //show save message
-  const [isSaved, setIsSaved] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [isStatus, setIsStatus] = useState("");
+  const [isButton, setIsButton] = useState("Add");
+
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  });
 
   //for every change of input text
   useEffect(() => {
     setTitle("");
     setBody("");
 
-    // shows the text in input field when select list
+    //shows the text in input field when select list
     if (selectedNote)
       return setTitle(selectedNote.title), setBody(selectedNote.body);
   }, [selectedNote]);
 
-  // messaging for save
+  // messaging for save,update & Delete
   useEffect(() => {
-    setTimeout(() => setIsSaved(false), 5000);
-  }, [isSaved]);
-
-  // messaging for update
-  useEffect(() => {
-    setTimeout(() => setIsUpdated(false), 5000);
-  }, [isUpdated]);
-
-  // messaging for delete
-  useEffect(() => {
-    setTimeout(() => setIsDeleted(false), 5000);
-  }, [isDeleted]);
+    setTimeout(() => setIsStatus(""), 5000);
+  }, [isStatus]);
 
   // title input
   const onChangeTitle = (e) => {
@@ -47,21 +41,26 @@ export default function Editor({ selectedNote, refreshList }) {
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };
+  useEffect(() => {
+    if (selectedNote) {
+      setIsButton("Update");
+    }
+  }, [selectedNote]);
 
   const onSave = (e) => {
     e.preventDefault();
-
     // clear input text
     setTitle("");
     setBody("");
 
     // update input text
     if (selectedNote) {
-      setIsUpdated(true);
+      setIsStatus("Updated");
       updateNote(selectedNote.id, title, body);
       return refreshList();
     }
-    setIsSaved(true);
+
+    setIsStatus("Saved");
     // create input text
     createNote(title, body);
     //rendering whole list
@@ -73,11 +72,12 @@ export default function Editor({ selectedNote, refreshList }) {
     e.preventDefault();
     // show delete message
     const { id } = selectedNote;
+
     deleteNote(id);
     refreshList();
     setTitle("");
     setBody("");
-    setIsDeleted(true);
+    setIsStatus("Deleted");
   };
 
   return (
@@ -91,6 +91,7 @@ export default function Editor({ selectedNote, refreshList }) {
           value={title}
           // "onChange" for edit input text
           onChange={onChangeTitle}
+          ref={inputRef}
         />
         <Form.Label>Note</Form.Label>
         <Form.Control
@@ -100,18 +101,21 @@ export default function Editor({ selectedNote, refreshList }) {
           onChange={onChangeBody}
         />
       </Form.Group>
-      <Button className="mr-2" variant="primary" onClick={onSave}>
+      {/* <Button className="mr-2" variant="primary" onClick={onSave}>
         Save
-      </Button>
+      </Button> */}
+      {isButton && (
+        <Button className="mr-2" variant="primary" onClick={onSave}>
+          {isButton}
+        </Button>
+      )}
       {selectedNote && (
         <Button variant="danger" onClick={onDelete}>
           Delete
         </Button>
       )}
       <br /> <br />
-      {isSaved && <Alert variant="info">Saved successfully!</Alert>}
-      {isUpdated && <Alert variant="info">Updated successfully!</Alert>}
-      {isDeleted && <Alert variant="info">Deleted successfully!</Alert>}
+      {isStatus && <Alert variant="info">{isStatus} successfully!</Alert>}
     </Form>
   );
 }
