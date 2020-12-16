@@ -77,7 +77,7 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
     // show delete message
     const { id } = selectedNote;
     deleteNote(id);
-    // deleteNote();
+    // deleteNote(selectedNote);
 
     refreshList();
     setTitle("");
@@ -89,7 +89,7 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
   return (
     <Form>
       {isStatus && (
-        <p>
+        <p style={styles.heading}>
           {isStatus} {userColor}
         </p>
       )}
@@ -124,3 +124,9 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
     </Form>
   );
 }
+
+const styles = {
+  heading: {
+    color: "green",
+  },
+};

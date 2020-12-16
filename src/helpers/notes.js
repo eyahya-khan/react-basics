@@ -41,8 +41,7 @@ export function moveNote() {
 export function updateNote(selectedNote, title, body) {
   const notes = getNotes();
   const noteToUpdate = 0;
-  const indexToUpdate =
-    notes.length > 0 ? notes[selectedNote] : notes[noteToUpdate];
+  const indexToUpdate = notes.length > 0 ? notes[selectedNote] : c;
   const note = {
     title,
     body,
@@ -58,9 +57,11 @@ export function updateNote(selectedNote, title, body) {
   // return notes;
 }
 
-export function deleteNote() {
+export function deleteNote(selectedNote) {
   const notes = getNotes();
-  const indexToDelete = notes.length > 0 ? notes[indexToDelete] : null;
+  const noteToDelete = 0;
+  const indexToDelete =
+    notes.length > 0 ? notes[noteToDelete] : notes[selectedNote];
   // console.log(indexToDelete);
   // console.log(id);
   if (indexToDelete >= 0) notes.splice(indexToDelete, 1);

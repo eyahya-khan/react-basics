@@ -1,18 +1,5 @@
-/*
-C: create a note
-R: Read (get) one note and all notes
-U: Update a note
-D: Delete a note
-*/
+const notes = [];
 
-const notes = [
-  // { id: 1, title: "New note", body: "This is new note" },
-  // { id: 2, title: "Empty note? No", body: "Empty note forever" },
-  // { id: 4, title: "Else note", body: "Something else note" },
-  // { id: 3, title: "Yet another note!", body: " This is yet another note" },
-];
-
-// works!
 export function createNote(title, body) {
   const note = {
     id: Date.now(),
@@ -23,13 +10,11 @@ export function createNote(title, body) {
   return note;
 }
 
-// works!
 export function getNote(id) {
   const notes = getNotes();
   return notes.find((note) => note.id === id);
 }
 
-// works!
 export function getNotes() {
   return notes;
 }

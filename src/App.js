@@ -67,9 +67,3 @@ function App() {
 }
 
 export default App;
-
-// const styles = {
-//   heading: {
-//     color: "green",
-//   },
-// };
