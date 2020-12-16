@@ -13,6 +13,8 @@ function App() {
   const [selectedNote, setSelectedNote] = useState(undefined);
   const [notes, setNotes] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const notes = getNotes();
     setNotes(notes);
@@ -45,11 +47,19 @@ function App() {
             notes={notes}
             selectedNote={selectedNote}
             setSelectedNote={setSelectedNote}
+            isLoading={isLoading}
           />
         </Col>
         <Col xs={12} md={8}>
-          <Editor refreshList={refreshList} selectedNote={selectedNote} />
+          <Editor
+            refreshList={refreshList}
+            selectedNote={selectedNote}
+            setIsLoading={setIsLoading}
+          />
         </Col>
+        {/* <Col xs={12} md={8}>
+          <FormDataComponent />
+        </Col> */}
       </Row>
     </Container>
   );

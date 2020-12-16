@@ -25,6 +25,7 @@ export function createNote(title, body) {
 
 // works!
 export function getNote(id) {
+  const notes = getNotes();
   return notes.find((note) => note.id === id);
 }
 
@@ -34,6 +35,7 @@ export function getNotes() {
 }
 
 export function updateNote(id, title, body) {
+  const notes = getNotes();
   const indexToUpdate = notes.findIndex((note) => note.id === id);
   const note = {
     id,
@@ -49,6 +51,7 @@ export function updateNote(id, title, body) {
 }
 
 export function deleteNote(id) {
+  const notes = getNotes();
   const indexToDelete = notes.findIndex((note) => note.id === id);
   // console.log(indexToDelete);
   // console.log(id);

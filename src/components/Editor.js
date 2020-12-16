@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Button";
 import { createNote, updateNote, deleteNote } from "./notes";
 
-export default function Editor({ selectedNote, refreshList }) {
+export default function Editor({ selectedNote, refreshList, setIsLoading }) {
   //take input value
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -12,11 +11,6 @@ export default function Editor({ selectedNote, refreshList }) {
   //show save message
   const [isStatus, setIsStatus] = useState("");
   const [isButton, setIsButton] = useState("Add");
-
-  // const inputRef = useRef('');
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // });
 
   //for every change of input text
   useEffect(() => {
@@ -30,7 +24,7 @@ export default function Editor({ selectedNote, refreshList }) {
 
   // messaging for save,update & Delete
   useEffect(() => {
-    setTimeout(() => setIsStatus(""), 5000);
+    setTimeout(() => setIsStatus(""), 2000);
   }, [isStatus]);
 
   // title input
@@ -49,6 +43,11 @@ export default function Editor({ selectedNote, refreshList }) {
 
   const onSave = (e) => {
     e.preventDefault();
+
+    //loading
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
     // clear input text
     setTitle("");
     setBody("");
@@ -58,10 +57,11 @@ export default function Editor({ selectedNote, refreshList }) {
       setIsStatus("Updated");
       setIsButton("Add");
       updateNote(selectedNote.id, title, body);
+      // updateNote(selectedNote, title, body);
       return refreshList();
     }
-
     setIsStatus("Saved");
+
     // create input text
     createNote(title, body);
     //rendering whole list
@@ -74,10 +74,9 @@ export default function Editor({ selectedNote, refreshList }) {
 
     // show delete message
     const { id } = selectedNote;
-    // console.log(id);
-    // console.log(selectedNote);
-
     deleteNote(id);
+    // deleteNote();
+
     refreshList();
     setTitle("");
     setBody("");
@@ -87,6 +86,7 @@ export default function Editor({ selectedNote, refreshList }) {
 
   return (
     <Form>
+      {isStatus && <p>{isStatus} successfully!</p>}
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -96,7 +96,6 @@ export default function Editor({ selectedNote, refreshList }) {
           value={title}
           // "onChange" for edit input text
           onChange={onChangeTitle}
-          // ref={inputRef}
         />
         <Form.Label>Note</Form.Label>
         <Form.Control
@@ -106,9 +105,6 @@ export default function Editor({ selectedNote, refreshList }) {
           onChange={onChangeBody}
         />
       </Form.Group>
-      {/* <Button className="mr-2" variant="primary" onClick={onSave}>
-        Save
-      </Button> */}
       {isButton && (
         <Button className="mr-2" variant="primary" onClick={onSave}>
           {isButton}
@@ -119,8 +115,6 @@ export default function Editor({ selectedNote, refreshList }) {
           Delete
         </Button>
       )}
-      <br /> <br />
-      {isStatus && <Alert variant="info">{isStatus} successfully!</Alert>}
     </Form>
   );
 }
