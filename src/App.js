@@ -6,8 +6,10 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import List from "./components/List";
-import Editor from "./components/Editor";
 import { getNotes } from "./components/notes";
+import Editor from "./components/Editor";
+
+// export const colorContext = React.createContext();
 
 function App() {
   const [selectedNote, setSelectedNote] = useState(undefined);
@@ -51,18 +53,23 @@ function App() {
           />
         </Col>
         <Col xs={12} md={8}>
+          {/* <colorContext.provider value={"successfull"}> */}
           <Editor
             refreshList={refreshList}
             selectedNote={selectedNote}
             setIsLoading={setIsLoading}
           />
+          {/* </colorContext.provider> */}
         </Col>
-        {/* <Col xs={12} md={8}>
-          <FormDataComponent />
-        </Col> */}
       </Row>
     </Container>
   );
 }
 
 export default App;
+
+// const styles = {
+//   heading: {
+//     color: "green",
+//   },
+// };

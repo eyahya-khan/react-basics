@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { createNote, updateNote, deleteNote } from "./notes";
+import { colorContext } from "../index";
 
 export default function Editor({ selectedNote, refreshList, setIsLoading }) {
+  const userColor = useContext(colorContext);
   //take input value
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -86,7 +88,11 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
 
   return (
     <Form>
-      {isStatus && <p>{isStatus} successfully!</p>}
+      {isStatus && (
+        <p>
+          {isStatus} {userColor}
+        </p>
+      )}
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
