@@ -6,10 +6,8 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import List from "./components/List";
-import { getNotes } from "./components/notes";
+import { getNotes } from "./helpers/notes";
 import Editor from "./components/Editor";
-
-// export const colorContext = React.createContext();
 
 function App() {
   const [selectedNote, setSelectedNote] = useState(undefined);
@@ -20,7 +18,8 @@ function App() {
   useEffect(() => {
     const notes = getNotes();
     setNotes(notes);
-  }, [notes]);
+    // console.log(typeof notes);
+  }, []);
 
   const refreshList = () => {
     setSelectedNote(undefined);
@@ -53,13 +52,11 @@ function App() {
           />
         </Col>
         <Col xs={12} md={8}>
-          {/* <colorContext.provider value={"successfull"}> */}
           <Editor
             refreshList={refreshList}
             selectedNote={selectedNote}
             setIsLoading={setIsLoading}
           />
-          {/* </colorContext.provider> */}
         </Col>
       </Row>
     </Container>

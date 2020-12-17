@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { createNote, updateNote, deleteNote } from "./notes";
+import { createNote, updateNote, deleteNote } from "../helpers/notes";
 import { colorContext } from "../index";
 
 export default function Editor({ selectedNote, refreshList, setIsLoading }) {
@@ -14,14 +14,16 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
   const [isStatus, setIsStatus] = useState("");
   const [isButton, setIsButton] = useState("Add");
 
-  //for every change of input text
+  //for select note, of input text
   useEffect(() => {
     setTitle("");
     setBody("");
 
     //shows the text in input field when select list
-    if (selectedNote)
-      return setTitle(selectedNote.title), setBody(selectedNote.body);
+    if (selectedNote) {
+      setTitle(selectedNote.title);
+      setBody(selectedNote.body);
+    }
   }, [selectedNote]);
 
   // messaging for save,update & Delete
@@ -50,7 +52,7 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 1000);
 
-    // clear input text
+    //clear input text
     setTitle("");
     setBody("");
 
@@ -85,6 +87,8 @@ export default function Editor({ selectedNote, refreshList, setIsLoading }) {
     setIsStatus("Deleted");
     setIsButton("Add");
   };
+  console.log(title);
+  console.log(body);
 
   return (
     <Form>

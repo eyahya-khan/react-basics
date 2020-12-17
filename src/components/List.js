@@ -12,10 +12,12 @@ export default function List({
     setSelectedNote(note);
   };
 
-  // if (isLoading) return (
-  // <p>
-  // <i className="fas fa-spinner fa-spin"></i>loading.....
-  // </p>)
+  // if (isLoading)
+  //   return (
+  //     <p>
+  //       <BeatLoader color="green" loading />
+  //     </p>
+  //   );
 
   return (
     <ListGroup as="ul">
